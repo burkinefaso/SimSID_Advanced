@@ -46,17 +46,7 @@ The model was trained and evaluated on multiple independent MRI datasets to test
 - IXI
 - BEIJING
 - OPENNEURO
-- NEW YORK B
-- SALD
-- ICBM
-- BERLIN M.
-- PITTSBURGH
-- ON-CS
-- NYU-CSC
-- LEIPZIG
-- NEW YORK ADHD
-- NEW YORK
-- NEWHAVEN
+- FCP
 
 ### Anomaly Evaluation
 
