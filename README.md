@@ -42,9 +42,7 @@ The model was trained and evaluated on multiple independent MRI datasets to test
 ### Training (Normal Only)
 
 - HCP
-- CAMBRIDGE
 - IXI
-- BEIJING
 - OPENNEURO
 - FCP
 
