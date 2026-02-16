@@ -1,8 +1,19 @@
 import torch
+<<<<<<< HEAD
 from torchvision import transforms
 from torch.utils.data import Dataset
 from PIL import Image
 import os
+=======
+import torch.nn.functional as F
+import torch.nn as nn
+from torchvision import transforms, utils
+from torch.utils.data import Dataset, DataLoader
+from PIL import Image
+import numpy as np
+import os
+import random
+>>>>>>> a5dbafb2e1c3717acaa2a28fc0d9fadabb5e6d9a
 
 class KarmaDataset(Dataset):
     def __init__(self, root, train=True, img_size=(256, 256), 
@@ -13,18 +24,31 @@ class KarmaDataset(Dataset):
         self.fnames = []
         self.train = train
         self.root = root
+<<<<<<< HEAD
         self.img_size = img_size
         self.normalize = normalize
+=======
+        self.normalize = normalize
+        self.img_size = img_size
+>>>>>>> a5dbafb2e1c3717acaa2a28fc0d9fadabb5e6d9a
         self.mean = 0.1307
         self.std = 0.3081
         self.full = full
         self.positive_ratio = positive_ratio
 
+<<<<<<< HEAD
         # --- Dönüşüm fonksiyonu (augmentasyon sadece eğitimde)
+=======
+        self.transforms = self._build_transforms(train, enable_transform, normalize_tanh)
+        self.load_data()
+
+    def _build_transforms(self, train, enable_transform, normalize_tanh):
+>>>>>>> a5dbafb2e1c3717acaa2a28fc0d9fadabb5e6d9a
         transform_list = []
         if train and enable_transform:
             transform_list.extend([
                 transforms.RandomAffine(0, translate=(0.05, 0.05), scale=(0.95, 1.05)),
+<<<<<<< HEAD
             ])
         transform_list.append(transforms.ToTensor())
         if normalize_tanh:
@@ -55,6 +79,36 @@ class KarmaDataset(Dataset):
         if not self.train:
             _load_folder('NORMAL', 0)
             _load_folder('ANOMALY', 1)
+=======
+                transforms.ToTensor()
+            ])
+        else:
+            transform_list.append(transforms.ToTensor())
+
+        if normalize_tanh:
+            transform_list.append(transforms.Normalize((0.5,), (0.5,)))
+        return transforms.Compose(transform_list)
+
+    def load_data(self):
+        self.data = []
+        self.fnames = []
+
+        if not self.train:
+            normal_path = os.path.join(self.root, 'NORMAL')
+            if os.path.exists(normal_path):
+                for item in sorted(os.listdir(normal_path)):
+                    img = Image.open(os.path.join(normal_path, item)).resize(self.img_size)
+                    self.data.append((img, 0))
+                    self.fnames.append(item)
+
+            anomaly_path = os.path.join(self.root, 'ANOMALY')
+            if os.path.exists(anomaly_path):
+                for item in sorted(os.listdir(anomaly_path)):
+                    img = Image.open(os.path.join(anomaly_path, item)).resize(self.img_size)
+                    self.data.append((img, 1))
+                    self.fnames.append(item)
+
+>>>>>>> a5dbafb2e1c3717acaa2a28fc0d9fadabb5e6d9a
             print(f'[TEST] {len(self.data)} data loaded from: {self.root}')
             return
 
@@ -69,6 +123,7 @@ class KarmaDataset(Dataset):
         else:
             num_neg = len(neg_items) if self.full else len(pos_items) - num_pos
 
+<<<<<<< HEAD
         # NORMAL
         for fname in pos_items[:num_pos]:
             fpath = os.path.join(self.root, 'NORMAL', fname)
@@ -90,14 +145,36 @@ class KarmaDataset(Dataset):
                 self.fnames.append(fname)
             except Exception as e:
                 print(f"Problem with {fpath}: {e}")
+=======
+        for item in pos_items[:num_pos]:
+            img = Image.open(os.path.join(self.root, 'NORMAL', item)).resize(self.img_size)
+            self.data.append((img, 0))
+            self.fnames.append(item)
+
+        for item in neg_items[:num_neg]:
+            img = Image.open(os.path.join(self.root, 'ANOMALY', item)).resize(self.img_size)
+            self.data.append((img, 1))
+            self.fnames.append(item)
+>>>>>>> a5dbafb2e1c3717acaa2a28fc0d9fadabb5e6d9a
 
         print(f'[TRAIN] {len(self.data)} data loaded from: {self.root}, positive rate: {self.positive_ratio:.2f}')
 
     def __getitem__(self, index):
         img, label = self.data[index]
+<<<<<<< HEAD
         if self.normalize:
             img = (img - self.mean) / self.std
         return img, torch.tensor([label]).long()
 
     def __len__(self):
         return len(self.data)
+=======
+        img = self.transforms(img)[[0]]
+        if self.normalize:
+            img -= self.mean
+            img /= self.std
+        return img, (torch.zeros((1,)) + label).long()
+
+    def __len__(self):
+        return len(self.data)
+>>>>>>> a5dbafb2e1c3717acaa2a28fc0d9fadabb5e6d9a

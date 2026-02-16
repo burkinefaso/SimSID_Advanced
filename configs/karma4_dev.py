@@ -37,9 +37,15 @@ class Config(BaseConfig):
         #---------------------
         self.print_freq = 10
         self.device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
+<<<<<<< HEAD
         self.epochs = 1000
         self.lr = 1e-4  # Öğrenme oranı
         self.batch_size = 128
+=======
+        self.epochs = 1250
+        self.lr = 1e-4  # Öğrenme oranı
+        self.batch_size = 16
+>>>>>>> a5dbafb2e1c3717acaa2a28fc0d9fadabb5e6d9a
         self.test_batch_size = 2
         self.scheduler = torch.optim.lr_scheduler.CosineAnnealingLR
         self.scheduler_args = dict(T_max=300, eta_min=self.lr * 0.1)
@@ -68,6 +74,7 @@ class Config(BaseConfig):
         self.decoder_memory = ['V1', 'V1', 'none', 'none']
 
         # Kayıp Fonksiyonu Ağırlıkları
+<<<<<<< HEAD
         self.recon_w = 0.25
         self.lpips_w = 0.50
         self.d_w = 0.15
@@ -76,12 +83,24 @@ class Config(BaseConfig):
         self.dist_w = 0.01
 
 
+=======
+        self.recon_w = 0.3
+        self.lpips_w = 0.5
+        self.g_w = 0.2
+        self.d_w = 0.8
+        self.dist_w = 0.01
+
+>>>>>>> a5dbafb2e1c3717acaa2a28fc0d9fadabb5e6d9a
         self.use_memory_inpaint_block = True
 
         self.positive_ratio = 1.0
 
         # Veri Yolları
+<<<<<<< HEAD
         self.data_root = r'C:\Users\BURKINEFASO\LPIPS_SIMSID\data\karma4'
+=======
+        self.data_root = r'C:\Users\BURKINEFASO\SimSID_PREMIUM\data\karma4'
+>>>>>>> a5dbafb2e1c3717acaa2a28fc0d9fadabb5e6d9a
         self.train_dataset = KarmaDataset(
             root=self.data_root + '/train',
             train=True,
@@ -100,7 +119,11 @@ class Config(BaseConfig):
             full=True
         )
         self.val_loader = torch.utils.data.DataLoader(
+<<<<<<< HEAD
             self.val_dataset, batch_size=256, shuffle=False, num_workers=0, drop_last=False
+=======
+            self.val_dataset, batch_size=1, shuffle=False, num_workers=0, drop_last=False
+>>>>>>> a5dbafb2e1c3717acaa2a28fc0d9fadabb5e6d9a
         )
 
         self.test_dataset = KarmaDataset(

@@ -16,6 +16,12 @@ import argparse
 import torchvision.utils as vutils
 import torch
 
+<<<<<<< HEAD
+=======
+
+#import lpips
+
+>>>>>>> a5dbafb2e1c3717acaa2a28fc0d9fadabb5e6d9a
 def lpips_fn():
     return lpips.LPIPS(net='alex')
 
@@ -95,11 +101,19 @@ def log_loss(log_file, epoch, train_loss, val_loss):
     log(log_file, msg)
 
 def save_image(path, data, prefix="img"):
+<<<<<<< HEAD
     os.makedirs(path, exist_ok=True)  # 
     for idx, tensor in enumerate(data):
         filename = os.path.join(path, f"{prefix}_{idx:03d}.png")
         
         
+=======
+    os.makedirs(path, exist_ok=True)  # path artık sadece klasör olacak
+    for idx, tensor in enumerate(data):
+        filename = os.path.join(path, f"{prefix}_{idx:03d}.png")
+        
+        # Eğer filename klasörse, hata çıkmasın
+>>>>>>> a5dbafb2e1c3717acaa2a28fc0d9fadabb5e6d9a
         if os.path.isdir(filename):
             print(f"[Warning] {filename} is a directory. Skipping...")
             continue
@@ -111,6 +125,10 @@ def save_tensor_as_image(tensor, path):
     tensor = tensor.clone().detach().cpu()
     tensor = (tensor - tensor.min()) / (tensor.max() - tensor.min() + 1e-8)
 
+<<<<<<< HEAD
+=======
+    # Önlem: Eğer aynı isimde klasör varsa silinemez; o yüzden hata almamak için uyarı
+>>>>>>> a5dbafb2e1c3717acaa2a28fc0d9fadabb5e6d9a
     if os.path.isdir(path):
         print(f"[Warning] Cannot save image, a directory exists: {path}")
         return

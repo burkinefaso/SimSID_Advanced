@@ -59,10 +59,17 @@ class BaseConfig():
                                dict(type='MemoryMatrixBlock', multiplier=16, num_memory=self.num_patch**2)]
 
         # loss weight
+<<<<<<< HEAD
         self.recon_w = 0.0
         self.lpips_w = 0.0
         self.g_w = 0.2
         self.d_w = 0.0
+=======
+        self.recon_w = 0.3
+        self.lpips_w = 0.5
+        self.g_w = 0.2
+        self.d_w = 0.8
+>>>>>>> a5dbafb2e1c3717acaa2a28fc0d9fadabb5e6d9a
         self.dist_w = 0.01
 
         # misc
